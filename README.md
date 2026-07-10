@@ -182,13 +182,11 @@ Protección de Capa 7 para el servidor Apache (`10.8.89.130`). En la sección *S
 
 ### 6.1 Interfaces de red
 
-![Configuración de interfaces](screenshots/01-interfaces.png)
 
 *Explicación:* vista de `Network > Interfaces` mostrando `Port 1` en modo DHCP Client (WAN), `Port 2` con IP `10.8.89.1/25` y DHCP Server habilitado, y `Port 3` con IP estática `10.8.89.129/28`.
 
 ### 6.2 Ruta estática por defecto
 
-![Ruta estática](screenshots/02-static-route.png)
 
 *Explicación:* regla en `Network > Static Routes` con destino `0.0.0.0/0` saliendo por `Port 1` hacia el gateway del ISP.
 
@@ -206,19 +204,15 @@ Protección de Capa 7 para el servidor Apache (`10.8.89.130`). En la sección *S
 
 ### 6.5 Application Control — bloqueo de llamadas WhatsApp
 
-![Application Control](screenshots/05-application-control.png)
 
 *Explicación:* firma `WhatsApp_Call` localizada en la categoría *Video/Audio* con acción `Block` aplicada.
 
 ### 6.6 IPS — sensor de escáneres de red
 
-![IPS Sensor](screenshots/06-ips-sensor.png)
-
 *Explicación:* sensor de `Security Profiles > Intrusion Prevention` con las firmas de *Information Gathering* y *Network Scanners* en acción `Block`.
 
 ### 6.7 WAF — firmas habilitadas
 
-![WAF Signatures](screenshots/07-waf-signatures.png)
 
 *Explicación:* panel de `Security Profiles > Web Application Firewall` con las categorías SQL Injection, XSS, Known Exploits y Generic Attacks en `Enable / Block`.
 
@@ -236,8 +230,6 @@ ping 10.8.89.130
 
 **Explicación:** la política `Acceso_Servidor_Web` restringe el servicio exclusivamente a HTTP (puerto 80); el protocolo ICMP es descartado por el FortiGate.
 
-![Ping bloqueado](screenshots/08-ping-bloqueado.png)
-
 ---
 
 ### Evidencia 2 — Filtrado de redes sociales y dominios
@@ -248,7 +240,8 @@ ping 10.8.89.130
 
 **Explicación:** el DNS Filter intercepta la consulta DNS; al intentar redirigir el tráfico hacia el portal de bloqueo en una conexión HTTPS con HSTS activo, el navegador corta la conexión, logrando el bloqueo efectivo.
 
-![Bloqueo redes sociales](screenshots/09-bloqueo-redes-sociales.png)
+<img width="769" height="381" alt="image" src="https://github.com/user-attachments/assets/63b50fd1-6af8-4b11-afac-be594b78176b" />
+
 
 ---
 
@@ -263,8 +256,8 @@ curl -v "http://10.8.89.130/?user=admin'%20OR%20'1'='1"
 Recv failure: Conexión reinicializada por la máquina remota
 ```
 **Explicación:** el motor WAF analiza el payload HTTP, reconoce la firma de Inyección SQL y envía un paquete TCP RST, cortando la comunicación antes de que alcance al servidor Apache.
+<img width="685" height="328" alt="image" src="https://github.com/user-attachments/assets/80c560e5-b6a2-4330-8759-e436bd9cc2fc" />
 
-![WAF bloqueando SQLi](screenshots/10-waf-sqli.png)
 
 ---
 
@@ -276,7 +269,7 @@ Recv failure: Conexión reinicializada por la máquina remota
 
 **Explicación:** el sistema registra la IP de origen (`10.8.89.2`), la IP de destino (`10.8.89.130`) y la acción ejecutada (`blocked`), proporcionando trazabilidad forense del intento de ataque.
 
-![Logs de seguridad](screenshots/11-logs-seguridad.png)
+<img width="1013" height="403" alt="image" src="https://github.com/user-attachments/assets/aaa83a7f-c83b-41f6-9c9b-de1a8e5064cb" />
 
 ---
 
